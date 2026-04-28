@@ -314,12 +314,16 @@ const TEST_MODE = false;
 // ============================================================
 
 const solved = JSON.parse(localStorage.getItem('sudoku7_solved') || '{}');
-function getTodayStr() { return new Date().toISOString().split('T')[0]; }
+function getTodayStr() {
+  const now = new Date();
+  const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+  return local.toISOString().split('T')[0];
+}
 function getStatus(i) {
   if (TEST_MODE) {
     const d = DAYS[i];
     if (solved[d.date]) return 'solved';
-    return 'active'; // toutes les grilles accessibles en mode test
+    return 'active';
   }
   const today = getTodayStr();
   const d = DAYS[i];
